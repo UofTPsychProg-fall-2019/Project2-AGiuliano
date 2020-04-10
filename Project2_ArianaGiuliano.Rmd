@@ -1,0 +1,449 @@
+---
+title: "Project 2-Ariana Giuliano"
+author: "Ariana Giuliano - 1001101826"
+date: '2020-02-06'
+output: html_document
+---
+###Setting up the data and loading packages
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse) #for making everything simpler
+library(readxl) #to read in an excel sheet
+library(ggplot2) #for plotting
+library(dplyr) #in case I need to wrangle data
+library(ggpubr) #also for plotting in case I need it
+pre <- read_excel("wdata.xlsx", sheet = "pre") #reading in data for pe
+post <- read_excel("wdata.xlsx", sheet = "post") #reading in the data for post
+#to run this you'll have to set the working directory to wherever you need, right now it's set to my source file location
+```
+
+###Running correlations between pre-stim brain data and reaction time
+```{r pre-stimulus r, echo=FALSE}
+###these lines of code are correlating behavioural data and brain data and then making a messy plot with the data points and a best fit line for both BA 25 patients and non BA 25 patients. I'm only using RT here because accuracy was not distributed enough to produce reliable correlations. I am also not running Fisher's Z tests here because the correlations are just exploratory. Instead, I ran correlations for all patients and visualized the difference between groups using ggplot. 
+cor.test(pre$RT_schtar, pre$TP_vmPFC_sch, method = c("pearson"), data = pre) #running Pearson's R
+
+pre %>% #using ggplot to quickly plot
+  ggplot(aes(RT_schtar, TP_vmPFC_sch, colour=lesion)) +
+  geom_point() +
+  geom_smooth(method=lm)
+
+cor.test(pre$RT_cattar, pre$TP_vmPFC_cat, method = c("pearson"), data = pre)
+
+pre %>%
+  ggplot(aes(RT_cattar, TP_vmPFC_cat, colour=lesion)) +
+  geom_point() +
+  geom_smooth(method=lm)
+
+cor.test(pre$RT_schtar, pre$TP_LT_sch, method = c("pearson"), data = pre)
+
+pre %>%
+  ggplot(aes(RT_schtar, TP_LT_sch, colour=lesion)) +
+  geom_point() +
+  geom_smooth(method=lm)
+
+cor.test(pre$RT_cattar, pre$TP_LT_cat, method = c("pearson"), data = pre)
+
+pre %>%
+  ggplot(aes(RT_cattar, TP_LT_cat, colour=lesion)) +
+  geom_point() +
+  geom_smooth(method=lm)
+
+cor.test(pre$RT_schtar, pre$AP_vmPFC_sch, method = c("pearson"), data = pre)
+
+pre %>%
+  ggplot(aes(RT_schtar, AP_vmPFC_sch, colour=lesion)) +
+  geom_point() +
+  geom_smooth(method=lm)
+
+cor.test(pre$RT_cattar, pre$AP_vmPFC_cat, method = c("pearson"), data = pre)
+
+pre %>%
+  ggplot(aes(RT_cattar, AP_vmPFC_cat, colour=lesion)) +
+  geom_point() +
+  geom_smooth(method=lm)
+
+cor.test(pre$RT_schtar, pre$AP_LT_sch, method = c("pearson"), data = pre)
+
+pre %>%
+  ggplot(aes(RT_schtar, AP_LT_sch, colour=lesion)) +
+  geom_point() +
+  geom_smooth(method=lm)
+
+cor.test(pre$RT_cattar, pre$AP_LT_cat, method = c("pearson"), data = pre)
+
+pre %>%
+  ggplot(aes(RT_cattar, AP_LT_cat, colour=lesion)) +
+  geom_point() +
+  geom_smooth(method=lm)
+
+cor.test(pre$RT_schtar, pre$BP_vmPFC_sch, method = c("pearson"), data = pre)
+
+pre %>%
+  ggplot(aes(RT_schtar, BP_vmPFC_sch, colour=lesion)) +
+  geom_point() +
+  geom_smooth(method=lm)
+
+cor.test(pre$RT_cattar, pre$BP_vmPFC_cat, method = c("pearson"), data = pre)
+
+pre %>%
+  ggplot(aes(RT_cattar, BP_vmPFC_cat, colour=lesion)) +
+  geom_point() +
+  geom_smooth(method=lm)
+
+cor.test(pre$RT_schtar, pre$BP_LT_sch, method = c("pearson"), data = pre)
+
+pre %>%
+  ggplot(aes(RT_schtar, BP_LT_sch, colour=lesion)) +
+  geom_point() +
+  geom_smooth(method=lm)
+
+cor.test(pre$RT_cattar, pre$BP_LT_cat, method = c("pearson"), data = pre)
+
+pre %>%
+  ggplot(aes(RT_cattar, BP_LT_cat, colour=lesion)) +
+  geom_point() +
+  geom_smooth(method=lm)
+
+cor.test(pre$RT_schtar, pre$AD_vmPFC_sch, method = c("pearson"), data = pre)
+
+pre %>%
+  ggplot(aes(RT_schtar, AD_vmPFC_sch, colour=lesion)) +
+  geom_point() +
+  geom_smooth(method=lm)
+
+cor.test(pre$RT_cattar, pre$AD_vmPFC_cat, method = c("pearson"), data = pre)
+
+pre %>%
+  ggplot(aes(RT_cattar, AD_vmPFC_cat, colour=lesion)) +
+  geom_point() +
+  geom_smooth(method=lm)
+
+cor.test(pre$RT_schtar, pre$AD_LT_sch, method = c("pearson"), data = pre)
+
+pre %>%
+  ggplot(aes(RT_schtar, AD_LT_sch, colour=lesion)) +
+  geom_point() +
+  geom_smooth(method=lm)
+
+cor.test(pre$RT_cattar, pre$AD_LT_cat, method = c("pearson"), data = pre)
+
+pre %>%
+  ggplot(aes(RT_cattar, AD_LT_cat, colour=lesion)) +
+  geom_point() +
+  geom_smooth(method=lm)
+
+cor.test(pre$RT_schtar, pre$TD_vmPFC_sch, method = c("pearson"), data = pre)
+
+pre %>%
+  ggplot(aes(RT_schtar, TD_vmPFC_sch, colour=lesion)) +
+  geom_point() +
+  geom_smooth(method=lm)
+
+cor.test(pre$RT_cattar, pre$TD_vmPFC_cat, method = c("pearson"), data = pre)
+
+pre %>%
+  ggplot(aes(RT_cattar, TD_vmPFC_cat, colour=lesion)) +
+  geom_point() +
+  geom_smooth(method=lm)
+```
+
+###Running wilcoxon W tests for pre-stimulus data
+```{r pre-stimulus W, echo=FALSE}
+###The following tests are running Wilcoxon W tests for the pre-stimulus brain data, running two-sided Wilcoxon W tests
+#the first 12 are for power (absolute value of amplitude in a certain frequency), the remaining are DICS (amplitude values in a certain frequency)
+TP_vmPFC_sch <- wilcox.test(TP_vmPFC_sch ~ lesion, exact = F, alternative = "two.sided", data=pre)
+TP_vmPFC_cat <- wilcox.test(TP_vmPFC_cat ~ lesion, exact = F, alternative = "two.sided", data=pre)
+TP_LT_sch <- wilcox.test(TP_LT_sch ~ lesion, exact = F, alternative = "two.sided", data=pre)
+TP_LT_cat <- wilcox.test(TP_LT_cat ~ lesion, exact = F, alternative = "two.sided", data=pre)
+AP_vmPFC_sch	<- wilcox.test(AP_vmPFC_sch ~ lesion, exact = F, alternative = "two.sided", data=pre)
+AP_vmPFC_cat	<- wilcox.test(AP_vmPFC_cat ~ lesion, exact = F, alternative = "two.sided", data=pre)
+AP_LT_sch <- wilcox.test(AP_LT_sch ~ lesion, exact = F, alternative = "two.sided", data=pre)
+AP_LT_cat <- wilcox.test(AP_LT_cat ~ lesion, exact = F, alternative = "two.sided", data=pre)
+BP_vmPFC_sch <- wilcox.test(BP_vmPFC_sch ~ lesion, exact = F, alternative = "two.sided", data=pre)
+BP_vmPFC_cat <- wilcox.test(BP_vmPFC_cat ~ lesion, exact = F, alternative = "two.sided", data=pre)
+BP_LT_sch <- wilcox.test(BP_LT_sch ~ lesion, exact = F, alternative = "two.sided", data=pre)
+BP_LT_cat <- wilcox.test(BP_LT_cat ~ lesion, exact = F, alternative = "two.sided", data=pre)
+
+TD_vmPFC_sch <- wilcox.test(TD_vmPFC_sch ~ lesion, exact = F, alternative = "two.sided", data=pre)
+TD_vmPFC_cat <- wilcox.test(TD_vmPFC_cat ~ lesion, exact = F, alternative = "two.sided", data=pre)
+AD_vmPFC_sch <- wilcox.test(AD_vmPFC_sch ~ lesion, exact = F, alternative = "two.sided", data=pre)
+AD_vmPFC_cat <- wilcox.test(AD_vmPFC_cat ~ lesion, exact = F, alternative = "two.sided", data=pre)		
+AD_LT_sch <- wilcox.test(AD_LT_sch ~ lesion, exact = F, alternative = "two.sided", data=pre)
+AD_LT_cat <- wilcox.test(AD_LT_cat ~ lesion, exact = F, alternative = "two.sided", data=pre)
+```
+
+###Running correlations between post-stim brain data and behaviour
+```{r post-stimulus r, echo=FALSE}
+###these lines of code are correlating behavioural data and brain data and then making a messy plot with the data points and a best fit line for both BA 25 patients and non BA 25 patients. I'm only using RT here because accuracy was not distributed enough to produce reliable correlations. I am also not running Fisher's Z tests here because the correlations are just exploratory. Instead, I ran correlations for all patients and visualized the difference between groups using ggplot. 
+cor.test(post$RT_schtar, post$TP_vmPFC_schtar, method = c("pearson"), data = post)
+
+post %>%
+  ggplot(aes(RT_schtar, TP_vmPFC_schtar, colour=lesion)) +
+  geom_point() +
+  geom_smooth(method=lm)
+
+cor.test(post$RT_cattar, post$TP_vmPFC_cattar, method = c("pearson"), data = post)
+
+post %>%
+  ggplot(aes(RT_cattar, TP_vmPFC_cattar, colour=lesion)) +
+  geom_point() +
+  geom_smooth(method=lm)
+
+cor.test(post$RT_schlur, post$TP_vmPFC_schlur, method = c("pearson"), data = post)
+
+post %>%
+  ggplot(aes(RT_schlur, TP_vmPFC_schlur, colour=lesion)) +
+  geom_point() +
+  geom_smooth(method=lm)
+
+cor.test(post$RT_catlur, post$TP_vmPFC_catlur, method = c("pearson"), data = post)
+
+post %>%
+  ggplot(aes(RT_catlur, TP_vmPFC_catlur, colour=lesion)) +
+  geom_point() +
+  geom_smooth(method=lm)
+
+cor.test(post$RT_schtar, post$TP_LT_schtar, method = c("pearson"), data = post)
+
+post %>%
+  ggplot(aes(RT_schtar, TP_LT_schtar, colour=lesion)) +
+  geom_point() +
+  geom_smooth(method=lm)
+
+cor.test(post$RT_cattar, post$TP_LT_cattar, method = c("pearson"), data = post)
+
+post %>%
+  ggplot(aes(RT_cattar, TP_LT_cattar, colour=lesion)) +
+  geom_point() +
+  geom_smooth(method=lm)
+
+cor.test(post$RT_schlur, post$TP_LT_schlur, method = c("pearson"), data = post)
+
+post %>%
+  ggplot(aes(RT_schlur, TP_LT_schlur, colour=lesion)) +
+  geom_point() +
+  geom_smooth(method=lm)
+
+cor.test(post$RT_catlur, post$TP_LT_catlur, method = c("pearson"), data = post)
+
+post %>%
+  ggplot(aes(RT_catlur, TP_LT_catlur, colour=lesion)) +
+  geom_point() +
+  geom_smooth(method=lm)
+
+cor.test(post$RT_schtar, post$AP_vmPFC_schtar, method = c("pearson"), data = post)
+
+post %>%
+  ggplot(aes(RT_schtar, AP_vmPFC_schtar, colour=lesion)) +
+  geom_point() +
+  geom_smooth(method=lm)
+
+cor.test(post$RT_cattar, post$AP_vmPFC_cattar, method = c("pearson"), data = post)
+
+post %>%
+  ggplot(aes(RT_cattar, AP_vmPFC_cattar, colour=lesion)) +
+  geom_point() +
+  geom_smooth(method=lm)
+
+cor.test(post$RT_schlur, post$AP_vmPFC_schlur, method = c("pearson"), data = post)
+
+post %>%
+  ggplot(aes(RT_schlur, AP_vmPFC_schlur, colour=lesion)) +
+  geom_point() +
+  geom_smooth(method=lm)
+
+cor.test(post$RT_catlur, post$AP_vmPFC_catlur, method = c("pearson"), data = post)
+
+post %>%
+  ggplot(aes(RT_catlur, AP_vmPFC_catlur, colour=lesion)) +
+  geom_point() +
+  geom_smooth(method=lm)
+
+cor.test(post$RT_schtar, post$AP_LT_schtar, method = c("pearson"), data = post)
+
+post %>%
+  ggplot(aes(RT_schtar, AP_LT_schtar, colour=lesion)) +
+  geom_point() +
+  geom_smooth(method=lm)
+
+cor.test(post$RT_cattar, post$AP_LT_cattar, method = c("pearson"), data = post)
+
+post %>%
+  ggplot(aes(RT_cattar, AP_LT_cattar, colour=lesion)) +
+  geom_point() +
+  geom_smooth(method=lm)
+
+cor.test(post$RT_schlur, post$AP_LT_schlur, method = c("pearson"), data = post)
+
+post %>%
+  ggplot(aes(RT_schlur, AP_LT_schlur, colour=lesion)) +
+  geom_point() +
+  geom_smooth(method=lm)
+
+cor.test(post$RT_catlur, post$AP_LT_catlur, method = c("pearson"), data = post)
+
+post %>%
+  ggplot(aes(RT_catlur, AP_LT_catlur, colour=lesion)) +
+  geom_point() +
+  geom_smooth(method=lm)
+
+cor.test(post$RT_schtar, post$BP_LT_schtar, method = c("pearson"), data = post)
+
+post %>%
+  ggplot(aes(RT_schtar, BP_LT_schtar, colour=lesion)) +
+  geom_point() +
+  geom_smooth(method=lm)
+
+cor.test(post$RT_cattar, post$BP_LT_cattar, method = c("pearson"), data = post)
+
+post %>%
+  ggplot(aes(RT_cattar, BP_LT_cattar, colour=lesion)) +
+  geom_point() +
+  geom_smooth(method=lm)
+
+cor.test(post$RT_schlur, post$BP_LT_schlur, method = c("pearson"), data = post)
+
+post %>%
+  ggplot(aes(RT_schlur, BP_LT_schlur, colour=lesion)) +
+  geom_point() +
+  geom_smooth(method=lm)
+
+cor.test(post$RT_catlur, post$BP_LT_catlur, method = c("pearson"), data = post)
+
+post %>%
+  ggplot(aes(RT_catlur, BP_LT_catlur, colour=lesion)) +
+  geom_point() +
+  geom_smooth(method=lm)
+
+cor.test(post$RT_schtar, post$AD_vmPFC_schtar, method = c("pearson"), data = post)
+
+post %>%
+  ggplot(aes(RT_schtar, AD_vmPFC_schtar, colour=lesion)) +
+  geom_point() +
+  geom_smooth(method=lm)
+
+cor.test(post$RT_cattar, post$AD_vmPFC_cattar, method = c("pearson"), data = post)
+
+post %>%
+  ggplot(aes(RT_cattar, AD_vmPFC_cattar, colour=lesion)) +
+  geom_point() +
+  geom_smooth(method=lm)
+
+cor.test(post$RT_schlur, post$AD_vmPFC_schlur, method = c("pearson"), data = post)
+
+post %>%
+  ggplot(aes(RT_schlur, AD_vmPFC_schlur, colour=lesion)) +
+  geom_point() +
+  geom_smooth(method=lm)
+
+cor.test(post$RT_catlur, post$AD_vmPFC_catlur, method = c("pearson"), data = post)
+
+post %>%
+  ggplot(aes(RT_catlur, AD_vmPFC_catlur, colour=lesion)) +
+  geom_point() +
+  geom_smooth(method=lm)
+
+cor.test(post$RT_schtar, post$AD_LT_schtar, method = c("pearson"), data = post)
+
+post %>%
+  ggplot(aes(RT_schtar, AD_LT_schtar, colour=lesion)) +
+  geom_point() +
+  geom_smooth(method=lm)
+
+cor.test(post$RT_cattar, post$AD_LT_cattar, method = c("pearson"), data = post)
+
+post %>%
+  ggplot(aes(RT_cattar, AD_LT_cattar, colour=lesion)) +
+  geom_point() +
+  geom_smooth(method=lm)
+
+cor.test(post$RT_schlur, post$AD_LT_schlur, method = c("pearson"), data = post)
+
+post %>%
+  ggplot(aes(RT_schlur, AD_LT_schlur, colour=lesion)) +
+  geom_point() +
+  geom_smooth(method=lm)
+
+cor.test(post$RT_catlur, post$AD_LT_catlur, method = c("pearson"), data = post)
+
+post %>%
+  ggplot(aes(RT_catlur, AD_LT_catlur, colour=lesion)) +
+  geom_point() +
+  geom_smooth(method=lm)
+
+cor.test(post$RT_schtar, post$BD_LT_schtar, method = c("pearson"), data = post)
+
+post %>%
+  ggplot(aes(RT_schtar, BD_LT_schtar, colour=lesion)) +
+  geom_point() +
+  geom_smooth(method=lm)
+
+cor.test(post$RT_cattar, post$BD_LT_cattar, method = c("pearson"), data = post)
+
+post %>%
+  ggplot(aes(RT_cattar, BD_LT_cattar, colour=lesion)) +
+  geom_point() +
+  geom_smooth(method=lm)
+
+cor.test(post$RT_schlur, post$BD_LT_schlur, method = c("pearson"), data = post)
+
+post %>%
+  ggplot(aes(RT_schlur, BD_LT_schlur, colour=lesion)) +
+  geom_point() +
+  geom_smooth(method=lm)
+
+cor.test(post$RT_catlur, post$BD_LT_catlur, method = c("pearson"), data = post)
+
+post %>%
+  ggplot(aes(RT_catlur, BD_LT_catlur, colour=lesion)) +
+  geom_point() +
+  geom_smooth(method=lm)
+```
+
+###Running wilcoxon W tests for post-stimulus data
+```{r post-stimulus W, echo=FALSE}
+###running the wilcoxon W test on post-stimulus data
+#the first 8 tests are for behavioural data (RT & accuracy), I'm running a two-sided wilcoxon W test
+RT_schtar <- wilcox.test(RT_schtar ~ lesion, exact = F, alternative = "two.sided", data=post)
+RT_schlur <- wilcox.test(RT_schlur ~ lesion, exact = F, alternative = "two.sided", data=post)
+RT_cattar <- wilcox.test(RT_cattar ~ lesion, exact = F, alternative = "two.sided", data=post)
+RT_catlur <- wilcox.test(RT_catlur ~ lesion, exact = F, alternative = "two.sided", data=post)
+acc_schtar <- wilcox.test(acc_schtar ~ lesion, exact = F, alternative = "two.sided", data=post)
+acc_schlur <- wilcox.test(acc_schlur ~ lesion, exact = F, alternative = "two.sided", data=post)
+acc_cattar <- wilcox.test(acc_cattar ~ lesion, exact = F, alternative = "two.sided", data=post)
+acc_catlur <- wilcox.test(acc_catlur ~ lesion, exact = F, alternative = "two.sided", data=post)
+###The following tests are running Wilcoxon W tests for the post-stimulus brain data, again running two-sided Wilcoxon W tests
+#the first 20 are for power (absolute value of amplitude in a certain frequency), the remaining are DICS (amplitude values in a certain frequency)
+TP_vmPFC_schtar <- wilcox.test(TP_vmPFC_schtar ~ lesion, exact = F, alternative = "two.sided", data=post)
+TP_vmPFC_schlur <- wilcox.test(TP_vmPFC_schlur ~ lesion, exact = F, alternative = "two.sided", data=post)
+TP_vmPFC_cattar <- wilcox.test(TP_vmPFC_cattar ~ lesion, exact = F, alternative = "two.sided", data=post)
+TP_vmPFC_catlur <- wilcox.test(TP_vmPFC_catlur ~ lesion, exact = F, alternative = "two.sided", data=post)
+TP_LT_schtar <- wilcox.test(TP_LT_schtar ~ lesion, exact = F, alternative = "two.sided", data=post)
+TP_LT_schlur <- wilcox.test(TP_LT_schlur ~ lesion, exact = F, alternative = "two.sided", data=post)
+TP_LT_cattar <- wilcox.test(TP_LT_cattar ~ lesion, exact = F, alternative = "two.sided", data=post)
+TP_LT_catlur <- wilcox.test(TP_LT_catlur ~ lesion, exact = F, alternative = "two.sided", data=post)
+AP_vmPFC_schtar	<- wilcox.test(AP_vmPFC_schtar ~ lesion, exact = F, alternative = "two.sided", data=post)
+AP_vmPFC_schlur <- wilcox.test(AP_vmPFC_schlur ~ lesion, exact = F, alternative = "two.sided", data=post)
+AP_vmPFC_cattar	<- wilcox.test(AP_vmPFC_cattar ~ lesion, exact = F, alternative = "two.sided", data=post)
+AP_vmPFC_catlur	<- wilcox.test(AP_vmPFC_catlur ~ lesion, exact = F, alternative = "two.sided", data=post)
+AP_LT_schtar <- wilcox.test(AP_LT_schtar ~ lesion, exact = F, alternative = "two.sided", data=post)
+AP_LT_schlur <- wilcox.test(AP_LT_schlur ~ lesion, exact = F, alternative = "two.sided", data=post)
+AP_LT_cattar <- wilcox.test(AP_LT_cattar ~ lesion, exact = F, alternative = "two.sided", data=post)
+AP_LT_catlur <- wilcox.test(AP_LT_catlur ~ lesion, exact = F, alternative = "two.sided", data=post)	
+BP_LT_schtar <- wilcox.test(BP_LT_schtar ~ lesion, exact = F, alternative = "two.sided", data=post)	
+BP_LT_schlur <- wilcox.test(BP_LT_schlur ~ lesion, exact = F, alternative = "two.sided", data=post)
+BP_LT_cattar <- wilcox.test(BP_LT_cattar ~ lesion, exact = F, alternative = "two.sided", data=post)	
+BP_LT_catlur <- wilcox.test(BP_LT_catlur ~ lesion, exact = F, alternative = "two.sided", data=post)	
+AD_vmPFC_schtar <- wilcox.test(AD_vmPFC_schtar ~ lesion, exact = F, alternative = "two.sided", data=post)
+AD_vmPFC_schlur <- wilcox.test(AD_vmPFC_schlur ~ lesion, exact = F, alternative = "two.sided", data=post)
+AD_vmPFC_cattar <- wilcox.test(AD_vmPFC_cattar ~ lesion, exact = F, alternative = "two.sided", data=post)		
+AD_vmPFC_catlur <- wilcox.test(AD_vmPFC_catlur ~ lesion, exact = F, alternative = "two.sided", data=post)
+AD_LT_schtar <- wilcox.test(AD_LT_schtar ~ lesion, exact = F, alternative = "two.sided", data=post)		
+AD_LT_schlur <- wilcox.test(AD_LT_schlur ~ lesion, exact = F, alternative = "two.sided", data=post)
+AD_LT_cattar <- wilcox.test(AD_LT_cattar ~ lesion, exact = F, alternative = "two.sided", data=post)	
+AD_LT_catlur <- wilcox.test(AD_LT_catlur ~ lesion, exact = F, alternative = "two.sided", data=post)	
+BD_LT_schtar <- wilcox.test(BD_LT_schtar ~ lesion, exact = F, alternative = "two.sided", data=post)	
+BD_LT_schlur <- wilcox.test(BD_LT_schlur ~ lesion, exact = F, alternative = "two.sided", data=post)	
+BD_LT_cattar <- wilcox.test(BD_LT_cattar ~ lesion, exact = F, alternative = "two.sided", data=post)	
+BD_LT_catlur <- wilcox.test(BD_LT_catlur ~ lesion, exact = F, alternative = "two.sided", data=post)
+```
